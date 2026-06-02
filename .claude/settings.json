@@ -1,0 +1,76 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "BRIDGE_URL=http://127.0.0.1:33641 TASK_ID=a907df51f730 SESSION_ID= USER_ID=69ee71ce05b14bab704187c4 python3 /opt/hooks/guard_bash.py"
+          }
+        ]
+      },
+      {
+        "matcher": "Edit|Write|NotebookEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "PROJECT_ROOT=/workspaces/a907df51f730 TASK_ID=a907df51f730 SESSION_ID= USER_ID=69ee71ce05b14bab704187c4 python3 /opt/hooks/guard_path.py"
+          }
+        ]
+      },
+      {
+        "matcher": "WebFetch",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "ALLOWED_DOMAINS= TASK_ID=a907df51f730 SESSION_ID= USER_ID=69ee71ce05b14bab704187c4 python3 /opt/hooks/guard_network.py"
+          }
+        ]
+      },
+      {
+        "matcher": "Agent",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "BRIDGE_URL=http://127.0.0.1:33641 TASK_ID=a907df51f730 SESSION_ID= USER_ID=69ee71ce05b14bab704187c4 python3 /opt/hooks/guard_deploy_agent.py"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": ".*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "BRIDGE_URL=http://127.0.0.1:33641 TASK_ID=a907df51f730 SESSION_ID= USER_ID=69ee71ce05b14bab704187c4 python3 /opt/hooks/telemetry.py"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "BRIDGE_URL=http://127.0.0.1:33641 CURRENT_PHASE=received TASK_ID=a907df51f730 SESSION_ID= USER_ID=69ee71ce05b14bab704187c4 python3 /opt/hooks/stop_handler.py"
+          }
+        ]
+      }
+    ]
+  },
+  "enabledPlugins": {
+    "/opt/devops_plugin": true
+  },
+  "mcpServers": {
+    "code-review-graph": {
+      "command": "npx",
+      "args": ["-y", "@code-review-graph/mcp-server", "--workspace", "/workspaces/a907df51f730"]
+    },
+    "semble": {
+      "command": "npx",
+      "args": ["-y", "@semble/mcp-memory", "--namespace", "69ee71ce05b14bab704187c4"]
+    }
+  }
+}
