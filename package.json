@@ -1,5 +1,14 @@
 {
+  "name": "web-snake-game",
+  "version": "1.0.0",
+  "description": "A classic snake game built with vanilla HTML/CSS/JavaScript",
+  "main": "index.html",
+  "scripts": {
+    "dev:fe": "npx http-server -p 3000 -o",
+    "test": "node test-game-logic.js"
+  },
   "dependencies": {
+    "http-server": "^14.1.1",
     "playwright": "^1.60.0"
   }
 }
